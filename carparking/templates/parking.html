@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+ input[type=text]:focus {
+    background-color: lightblue;
+    color: Black ;
+}
+#table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+
+#table tr:hover {background-color: #ddd;}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    cursor: pointer;
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+.dropdown .dropbtn2 , .dropbtn3, .dropbtn4, .dropbtn5{
+    cursor: pointer;
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.show,.show2, .show3, .show4, .show5{
+    display: block;
+}
+</style>
+</head>
+   <body>
+
+
+   {% with messages = get_flashed_messages() %}
+   {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+   {% endwith %}
+
+
+<div class="navbar">
+  <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction()">Add Car in the parking
+      <i class="fa fa-caret-down"></i>
+    </button>
+
+      <div class="dropdown-content" id="myDropdown">
+         <form  action="{{ url_for('addparking') }}" method="POST" style="float: left; margin-left: 50px">
+         Add Car in the parking<br>
+            Registration No. <input type="text" name="regno">
+            Color <input type="text" name="color"><br>
+            In Date <input type="Date" name="InTimeDate"> <input type="time" name="InTimeTime">
+            <input type="submit" value="Proceed">
+         </form>
+       </div>
+     </div>
+
+     <div class="dropdown">
+    <button class="dropbtn2" onclick="myFunction2()">Registration no. of cars of color 
+      <i class="fa fa-caret-down"></i>
+    </button>
+      <div  class="dropdown-content" id="myDropdown2">
+         <form name ="show2" action="{{ url_for('colorslot') }}" method= "POST" style="float: right; margin-right: 50px">
+         Registration no. of car 
+         <select  id="selectVal" name="selectVal" onchange="this.form.submit()">
+           <option value="Default"> --- </option>
+           <option value="Black"> Black </option>
+           <option value="White"> White </option>
+           <option value="Blue"> Blue </option>
+           <option value="Red"> Red </option>
+         </select>
+         <noscript><input type="submit" value ='submit' > </noscript>
+      </form>
+   </div>
+ </div>
+
+     <div class="dropdown">
+    <button class="dropbtn3" onclick="myFunction3()">Slot No. of car with Registration No. 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div  class="dropdown-content" id="myDropdown3">
+      <form name ="search" action="{{ url_for('searchcar') }}" method= "POST" style="float: left;">
+         Slot No. of car with Registration No.
+         <select  id="search" name="search" onchange="this.form.submit()">
+            <option value="Default"> ----- </option>
+      {% for car in details %}
+      {% if car.SlotNo>0 %}
+              <option value="{{ car.RegNo }} "> {{ car.RegNo }}  </option>
+      {% endif %}
+      {% endfor %}
+         </select>
+         <noscript><input type="submit" value ='submit' class="buttonD"> </noscript>
+      </form>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="dropbtn4" onclick="myFunction4()">Slot No. of all cars of color 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content" id="myDropdown4">
+      <form name ="color" action="{{ url_for('slotnocolor') }}" method= "POST" style="float: right; margin-right: 50px">
+         Slot No. of all cars of color 
+         <select  id="color" name="color" onchange="this.form.submit()">
+           <option value="Default"> NO color </option>
+           <option value="Black"> Black </option>
+           <option value="White"> White </option>
+           <option value="Blue"> Blue </option>
+           <option value="Red"> Red </option>
+         </select>
+         <noscript><input type="submit" value ='submit' > </noscript>
+      </form>
+    </div>
+  </div>
+   <div class="dropdown">
+    <button class="dropbtn5" onclick="myFunction5()">Revenue 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div  class="dropdown-content" id="myDropdown5">
+    <form  action="{{ url_for('totalrevenue') }}" method="POST" style="float: left; margin-left: 50px">
+            Start Date <input type="Date" name="StartDate"> 
+            <br>End Date <input type="Date" name="EndDate">
+            <input type="submit" value="Proceed">
+    </form>
+  </div>
+</div>
+</div>
+
+
+      <table id="table" border = 1>
+         <tr>
+             <th>Registration No.</th>
+             <th>Color</th>
+             <th>Slot No.</th>
+             <th> In Time </th>
+         </tr>
+         {% for car in details %}
+           {% if car.SlotNo >0 %}
+                <form align="center" action="{{ url_for('deleteparking',slot = car.SlotNo) }}" method="POST" style="padding-left: 20%;">
+                        
+              <tr>
+
+                 <td> {{ car.RegNo }} <input type="submit" value ='Delete'> </form> </td>
+                 <td> {{ car.Color }} </td>
+                 <td> {{ car.SlotNo }} </td>
+                 <td> {{ car.Intime.strftime("%d-%b-%Y - %H:%M %p") }}</td>
+
+              </tr>
+           {% endif %}
+         {% endfor %}
+      </table>
+
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+function myFunction2() {
+    document.getElementById("myDropdown2").classList.toggle("show2");
+}
+function myFunction3() {
+    document.getElementById("myDropdown3").classList.toggle("show3");
+}
+function myFunction4() {
+    document.getElementById("myDropdown4").classList.toggle("show4");
+}
+function myFunction5() {
+    document.getElementById("myDropdown5").classList.toggle("show5");
+}
+
+
+</script>
+</body>
+</html>
+

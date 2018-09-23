@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer");
+
+    chart.options.axisY = { prefix: "Rs. ", suffix: ".00" };
+    chart.options.title = { text: "Revenue Generated " };
+
+    var series1 = { //dataSeries - first quarter
+        type: "column",
+        name: "Revenue per month",
+        showInLegend: true
+    };
+
+    chart.options.data = [];
+    chart.options.data.push(series1);
+
+
+    series1.dataPoints = [];
+   	
+   		var k =Object.keys({{dataset|safe}});
+   		var v = Object.values({{dataset|safe}});
+   		for(i in k ){
+   			series1.dataPoints.push({label:k[i], y: v[i]})
+   		}
+   		
+
+ 
+
+    chart.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+
+<body>
+    <div> Total Revenue Generated between {{StartDate.strftime("%d-%b-%Y ") }} till {{EndDate.strftime("%d-%b-%Y ") }} = {{Revenue}}</div>
+    <div id="chartContainer" style="height: 300px; width: 100%; margin-top: 20px">
+    </div>
+</body>
+</html>

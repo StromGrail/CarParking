@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style > ul {color: red;} </style>
+	<title>
+		Car Parking Web Application
+	</title>
+</head>
+<body>
+
+<style>
+  
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+ input[type=text]:focus {
+    background-color: lightblue;
+    color: Black ;
+}
+#table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+
+#table tr:hover {background-color: #ddd;}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+</style>
+
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+	{% endwith %}
+
+	<table  id="table"  border = 1>
+         <tr>
+             
+             <th>Slot No</th>
+         </tr>
+         {% for car in details %}
+         {% if car.SlotNo >0 %}
+            <tr>
+               <td> {{ car.SlotNo }} </td>
+            </tr>
+         {% endif %}
+         {% endfor %}
+      </table>
+
+      
+</body>
+</html>
